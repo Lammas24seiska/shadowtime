@@ -1,6 +1,8 @@
 package fi.lammas.backend.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 /**
  * TimePeriod is a class that represents a time period with a start and end time.
@@ -29,10 +31,30 @@ public class TimePeriod {
         checkValidTimePeriod(startTime, endTime);
     }
 
+    /**
+     * Constructor for TimePeriod class.
+     * @param startTime the start time of the time period with a timezone
+     * @param endTime the end time of the time period with a timezone
+     */
+    public TimePeriod(ZonedDateTime startTime, ZonedDateTime endTime) {
+        this.startTime = startTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+        this.endTime = endTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+
+        checkValidTimePeriod(this.startTime , this.endTime);
+    }
+
+    /**
+     * Get the time period start time in UTC.
+     * @return the start time of the time period in UTC
+     */
     public LocalDateTime getStartTime() {
         return startTime;
     }
 
+    /**
+     * Set the time period end time in UTC.
+     * @return the end time of the time period in UTC
+     */
     public LocalDateTime getEndTime() {
         return endTime;
     }
