@@ -1,0 +1,39 @@
+/* FooterBanner.css */
+
+.footer-banner {
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #bdc3c7;
+    color: #ecf0f1;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.footer-banner:has(:only-child) {
+    justify-content: flex-end;
+}
+
+.footer-banner button {
+    background-color: #024cbc;
+    color: #ecf0f1;
+    border: none;
+    padding: 12px 24px; 
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.footer-banner button:hover {
+    background-color: #2980b9;
+}

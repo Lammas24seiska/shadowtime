@@ -1,0 +1,31 @@
+.meeting-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+}
+
+.meeting-toolbar-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.meeting-toolbar button {
+    background-color: #0c420f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.meeting-toolbar button:hover {
+    background-color: #147219;
+}
+

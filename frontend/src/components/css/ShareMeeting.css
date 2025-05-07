@@ -1,0 +1,54 @@
+.link-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.email-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.email-input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.share-meeting-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.share-meeting-form p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 0px;
+}
+
+.share-meeting-form button {
+    min-width: 100px;
+}
+
+.delete-button {
+    background-color: #c51414;
+}
+
+.share-meeting-form input[type="text"],
+.share-meeting-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
