@@ -99,7 +99,7 @@ const WeekUtils = {
         if (start >= startOfWeek && start <= endOfWeek) {
             const startHour = start.getHours();
             const startMinute = start.getMinutes();
-            const startDay = start.getDay() -1;
+            const startDay = (start.getDay() + 6) % 7;
             const length = Math.ceil((end - start) / (1000 * 60));
             return {
                 startHour,
