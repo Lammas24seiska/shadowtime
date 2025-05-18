@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import ShadowCalendarElement from "../components/ShadowCalendarElement";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./css/CreateMeeting.css";
 import FooterBanner from "../components/FooterBanner";
 
@@ -10,7 +10,16 @@ function CreateMeeting() {
     const [isLocked, setIsLocked] = useState(false);
     const navigate = useNavigate();
     const outletExists = useOutlet();
+    const formRef = useRef(null);
     let meetingData = {};
+
+    // Set default start to today and end to a week after
+    const today = new Date();
+    const weekAfter = new Date(today);
+    weekAfter.setDate(today.getDate() + 7);
+
+    const [startDate, setStartDate] = useState(today.toISOString().split("T")[0]);
+    const [endDate, setEndDate] = useState(weekAfter.toISOString().split("T")[0]);
 
     const toggleLock = (resubmit) => {
         if (resubmit && !isLocked) {
@@ -53,8 +62,8 @@ function CreateMeeting() {
             creatorId: uuidv4(),
             participantId: uuidv4(),
             title: event.target["meeting-title"].value,
-            start: event.target["meeting-start"].value,
-            end: event.target["meeting-end"].value,
+            start: startDate,
+            end: endDate,
             description: event.target["meeting-description"].value,
             location: event.target["meeting-location"].value,
             duration: event.target["meeting-duration"].value,
@@ -71,7 +80,7 @@ function CreateMeeting() {
 
 return (
     <>
-    <form className="meeting-form main-container" onSubmit={handleSubmit}>
+    <form ref={formRef} className="meeting-form main-container" onSubmit={handleSubmit}>
         <div className="card-container">
             <Outlet/>
             <div className="meeting-info card">
@@ -103,9 +112,25 @@ return (
                     <div className="label-input-input-group">
                         <label htmlFor="meeting-time-interval">Time Interval (from - to)</label>
                         <div className="from-to-input">
-                            <input disabled={isLocked} type="date" id="meeting-start" name="meeting-start" defaultValue={new Date().toISOString().split("T")[0]} required />
+                            <input
+                                disabled={isLocked}
+                                type="date"
+                                id="meeting-start"
+                                name="meeting-start"
+                                value={startDate}
+                                onChange={e => setStartDate(e.target.value)}
+                                required
+                            />
                             <div>-</div>
-                            <input disabled={isLocked} type="date" id="meeting-end" name="meeting-end" defaultValue={new Date().toISOString().split("T")[0]} required />
+                            <input
+                                disabled={isLocked}
+                                type="date"
+                                id="meeting-end"
+                                name="meeting-end"
+                                value={endDate}
+                                onChange={e => setEndDate(e.target.value)}
+                                required
+                            />
                         </div>
                     </div>
                     <div className="label-input-group">
@@ -113,7 +138,11 @@ return (
                         <input disabled={isLocked} type="time" id="meeting-duration" name="meeting-duration" defaultValue="01:30"/>
                     </div>
                 </div>
-                <ShadowCalendarElement/>
+                <ShadowCalendarElement 
+                    participantId={meetingData.participantId}
+                    intervalStartDate={startDate}
+                    intervalEndDate={endDate}
+                />
             </div>
             <div className="meeting-settings card">
                 <h1>Settings</h1>
@@ -131,9 +160,22 @@ return (
             
         </div>
     </form>
-    <FooterBanner buttons={!useOutlet() ? [
-                <button type="submit" className="create-meeting-button">Create Meeting</button>
-                ] : []}/>
+    <FooterBanner
+        buttons={
+            !useOutlet()
+                ? [
+                    <button
+                        key="create"
+                        type="button"
+                        className="create-meeting-button"
+                        onClick={() => formRef.current && formRef.current.requestSubmit()}
+                    >
+                        Create Meeting
+                    </button>
+                ]
+                : []
+        }
+    />
     </>
 );
 }

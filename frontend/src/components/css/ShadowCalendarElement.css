@@ -2,6 +2,8 @@
     --primary-background-color: #f5f2f2;
     --border-color: #9e9e9e;
     --busy-time-color: #6e6e6ecc;
+    --outside-valid-calendar-area: #c7c7c7;
+    --busy-time-selected: #585858;
 }
 
 
@@ -147,10 +149,30 @@
     background-color: var(--primary-background-color);
 }
 
+.sc-grid-cell[outside] {
+    background-color: var(--outside-valid-calendar-area);
+}
+
 .sc-busy-time {
     background-color: var(--busy-time-color);
     border-radius: 7px;
     position: absolute;
     width: calc(100%/7);
+    cursor: grab; 
+    z-index: 10;  
+}
+
+.sc-busy-time[selected] {
+    background-color: var(--busy-time-selected);
+}
+
+.sc-busy-time-resize-handle {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    cursor: ns-resize;
+    background: transparent;
+    bottom: 0;
+    left: 0;
 }
 
