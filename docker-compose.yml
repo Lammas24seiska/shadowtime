@@ -9,8 +9,32 @@ services:
       - ./frontend:/app
     environment:
       - NODE_ENV=production
-  # database:
+
   backend:
     build: ./backend
     ports: 
       - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/shadowtime
+      - SPRING_DATASOURCE_USERNAME=shadowuser
+      - SPRING_DATASOURCE_PASSWORD=shadowpass
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: shadowtime
+      MYSQL_USER: shadowuser
+      MYSQL_PASSWORD: shadowpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
